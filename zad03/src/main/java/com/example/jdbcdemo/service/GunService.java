@@ -9,5 +9,6 @@ public interface GunService {
 	public int addGun(Gun gun);
 	public List<Gun> getAllGuns();
 	public void addAllGuns(List<Gun> guns);
+	public void deleteAllGuns();
 	
 }

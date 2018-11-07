@@ -108,5 +108,14 @@ public class GunServiceJDBC implements GunService {
 		}
 		
 	}
+
+	@Override
+	public void deleteAllGuns() {
+		try {
+			deleteAllGunsStmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 	
 }
