@@ -25,6 +25,7 @@ public class GunServiceJDBC implements GunService {
 	private PreparedStatement addGunStmt;
 	private PreparedStatement deleteAllGunsStmt;
 	private PreparedStatement getAllGunsStmt;
+	private PreparedStatement getAllUndamagedGunsStmt;
 	
 	public GunServiceJDBC() throws SQLException {
 		
@@ -46,6 +47,7 @@ public class GunServiceJDBC implements GunService {
 		addGunStmt = connection.prepareStatement("INSERT INTO Gun(name, productionDate, damaged, weight) VALUES (?, ?, ?, ?)");
 		deleteAllGunsStmt = connection.prepareStatement("DELETE FROM Gun");
 		getAllGunsStmt = connection.prepareStatement("SELECT id, name, productionDate, damaged, weight FROM Gun");
+		getAllUndamagedGunsStmt = connection.prepareStatement("SELECT id, name, productionDate, damaged, weight FROM Gun WHERE damaged=false");
 	}
 	
 	@Override
@@ -111,6 +113,30 @@ public class GunServiceJDBC implements GunService {
 		        return g2.getName().compareToIgnoreCase(g1.getName());
 		    }
 		});
+		
+		return guns;
+	}
+	
+	@Override
+	public List<Gun> getAllUndamagedGuns() {
+		List<Gun> guns = new ArrayList<Gun>();
+		
+		try {
+			ResultSet rs = getAllUndamagedGunsStmt.executeQuery();
+
+			while (rs.next()) {
+				Gun g = new Gun();
+				g.setId(rs.getInt("id"));
+				g.setName(rs.getString("name"));
+				g.setProductionDate(rs.getString("productionDate"));
+				g.setDamaged(rs.getBoolean("damaged"));
+				g.setWeight(rs.getDouble("weight"));
+				guns.add(g);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		
 		return guns;
 	}

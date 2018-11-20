@@ -10,6 +10,7 @@ public interface GunService {
 	public List<Gun> getAllGuns();
 	public List<Gun> getAllGunsASC();
 	public List<Gun> getAllGunsDESC();
+	public List<Gun> getAllUndamagedGuns();
 	public void deleteAllGuns();
 	
 	/* transactional */

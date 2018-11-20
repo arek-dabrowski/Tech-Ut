@@ -8,7 +8,6 @@ public class Gun {
 	private boolean isDamaged;
 	private double weight;
 	
-	
 	public Gun() {
 	}
 	
@@ -23,32 +22,46 @@ public class Gun {
 	public long getId() {
 		return id;
 	}
+	
 	public void setId(long id) {
 		this.id = id;
 	}
+	
 	public String getName() {
 		return name;
 	}
+	
 	public void setName(String name) {
 		this.name = name;
 	}
+	
 	public String getProductionDate() {
 		return productionDate;
 	}
+	
 	public void setProductionDate(String date) {
 		this.productionDate = date;
 	}
+	
 	public boolean isDamaged() {
 		return isDamaged;
 	}
+	
 	public void setDamaged(boolean isDamaged) {
 		this.isDamaged = isDamaged;
 	}
+	
 	public double getWeight() {
 		return weight;
 	}
+	
 	public void setWeight(double weight) {
 		this.weight = weight;
+	}
+	
+	@Override
+	public String toString() {
+		return "[id="+this.getId()+", name="+this.getName()+", productionDate="+this.getProductionDate()+", isDamaged="+this.isDamaged+", weight="+this.getWeight()+"]";
 	}
 	
 }
