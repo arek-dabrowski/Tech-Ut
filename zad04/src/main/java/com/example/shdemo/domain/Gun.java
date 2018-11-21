@@ -1,10 +1,14 @@
 package com.example.shdemo.domain;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Gun {
@@ -16,6 +20,8 @@ public class Gun {
 	private boolean isDamaged;
 	private double weight;
 	private Producer producer;
+	private Label label;
+	private List<User> user;
 	
 	public Gun() {
 		super();
@@ -67,4 +73,20 @@ public class Gun {
 	public void setProducer(Producer producer) {
 		this.producer = producer;
 	}
+	@OneToOne
+	public Label getLabel() {
+		return label;
+	}
+	public void setLabel(Label label) {
+		this.label = label;
+	}
+	@ManyToMany
+	public List<User> getUser() {
+		return user;
+	}
+	public void setUser(List<User> user) {
+		this.user = user;
+	}
+
+	
 }
