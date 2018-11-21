@@ -24,8 +24,11 @@ public class GunServiceJDBC implements GunService {
 
 	private PreparedStatement addGunStmt;
 	private PreparedStatement deleteAllGunsStmt;
+	private PreparedStatement deleteGunStmt;
+	private PreparedStatement getGunStmt;
 	private PreparedStatement getAllGunsStmt;
 	private PreparedStatement getAllUndamagedGunsStmt;
+	private PreparedStatement updateGunStmt;
 	
 	public GunServiceJDBC() throws SQLException {
 		
@@ -46,8 +49,11 @@ public class GunServiceJDBC implements GunService {
 		
 		addGunStmt = connection.prepareStatement("INSERT INTO Gun(name, productionDate, damaged, weight) VALUES (?, ?, ?, ?)");
 		deleteAllGunsStmt = connection.prepareStatement("DELETE FROM Gun");
+		deleteGunStmt = connection.prepareStatement("DELETE FROM Gun WHERE id=?");
 		getAllGunsStmt = connection.prepareStatement("SELECT id, name, productionDate, damaged, weight FROM Gun");
+		getGunStmt = connection.prepareStatement("SELECT id, name, productionDate, damaged, weight FROM Gun WHERE id=?");
 		getAllUndamagedGunsStmt = connection.prepareStatement("SELECT id, name, productionDate, damaged, weight FROM Gun WHERE damaged=false");
+		updateGunStmt = connection.prepareStatement("UPDATE Gun SET name=?, productionDate=?, damaged=?, weight=? WHERE id=?");
 	}
 	
 	@Override
@@ -63,6 +69,55 @@ public class GunServiceJDBC implements GunService {
 			e.printStackTrace();
 		}
 		return count;
+	}
+	
+	@Override
+	public void addAllGuns(List<Gun> guns) {
+		try {
+			connection.setAutoCommit(false);
+			for(Gun gun : guns) {
+				addGunStmt.setString(1, gun.getName());
+				addGunStmt.setString(2, gun.getProductionDate());
+				addGunStmt.setBoolean(3, gun.isDamaged());
+				addGunStmt.setDouble(4, gun.getWeight());
+				addGunStmt.executeUpdate();
+			}
+			connection.commit();
+		} catch (SQLException e) {
+			try {
+				connection.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		} finally {
+			try {
+				connection.setAutoCommit(true);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+	}
+	
+	@Override
+	public Gun getGun(long id) {
+		Gun g = null;
+		try {
+			getGunStmt.setLong(1, id);
+			ResultSet rs = getGunStmt.executeQuery();
+			while (rs.next()) {
+				g = new Gun();
+				g.setId(rs.getInt("id"));
+				g.setName(rs.getString("name"));
+				g.setProductionDate(rs.getString("productionDate"));
+				g.setDamaged(rs.getBoolean("damaged"));
+				g.setWeight(rs.getDouble("weight"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return g;
 	}
 	
 	@Override
@@ -142,32 +197,15 @@ public class GunServiceJDBC implements GunService {
 	}
 	
 	@Override
-	public void addAllGuns(List<Gun> guns) {
+	public int deleteGun(Gun gun) {
+		int count = 0;
 		try {
-			connection.setAutoCommit(false);
-			for(Gun gun : guns) {
-				addGunStmt.setString(1, gun.getName());
-				addGunStmt.setString(2, gun.getProductionDate());
-				addGunStmt.setBoolean(3, gun.isDamaged());
-				addGunStmt.setDouble(4, gun.getWeight());
-				addGunStmt.executeUpdate();
-			}
-			connection.commit();
+			deleteGunStmt.setLong(1, gun.getId());
+			count = deleteGunStmt.executeUpdate();
 		} catch (SQLException e) {
-			try {
-				connection.rollback();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
 			e.printStackTrace();
-		} finally {
-			try {
-				connection.setAutoCommit(true);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
 		}
-		
+		return count;
 	}
 
 	@Override
@@ -178,5 +216,21 @@ public class GunServiceJDBC implements GunService {
 			e.printStackTrace();
 		}
 	}
-	
+
+	@Override
+	public int updateGun(Gun gun) {
+		int count = 0;
+		try {
+			updateGunStmt.setString(1, gun.getName());
+			updateGunStmt.setString(2, gun.getProductionDate());
+			updateGunStmt.setBoolean(3, gun.isDamaged());
+			updateGunStmt.setDouble(4, gun.getWeight());
+			updateGunStmt.setLong(5, gun.getId());
+			count = updateGunStmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return count;
+	}
+
 }
