@@ -1,11 +1,17 @@
 package com.example.shdemo.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 
 @Entity
 @NamedQueries({
@@ -18,6 +24,8 @@ public class Producer {
 	
 	private String companyName;
 	private Boolean active = true;
+	
+	private List<Gun> guns = new ArrayList<Gun>();
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,6 +46,13 @@ public class Producer {
 	}
 	public void setActive(Boolean active) {
 		this.active = active;
+	}
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	public List<Gun> getGuns() {
+		return guns;
+	}
+	public void setGuns(List<Gun> guns) {
+		this.guns = guns;
 	}
 	
 }

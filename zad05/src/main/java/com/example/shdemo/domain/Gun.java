@@ -1,36 +1,44 @@
 package com.example.shdemo.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 
 @Entity
+@NamedQueries({ 
+	@NamedQuery(name = "gun.all", query = "Select g from Gun g")
+})
 public class Gun {
 	
 	private long id;
 	
 	private String name;
 	private String productionDate;
-	private boolean isDamaged;
+	private Boolean damaged;
 	private double weight;
 	private Producer producer;
 	private Label label;
-	private List<User> user;
+	private List<User> users = new ArrayList<User>();
 	
 	public Gun() {
 		super();
 	}
-	public Gun(String name, String productionDate, boolean isDamaged, double weight) {
+	public Gun(String name, String productionDate, Boolean damaged, double weight) {
 		super();
 		this.name = name;
 		this.productionDate = productionDate;
-		this.isDamaged = isDamaged;
+		this.damaged = damaged;
 		this.weight = weight;
 	}
 	
@@ -54,11 +62,11 @@ public class Gun {
 	public void setProductionDate(String productionDate) {
 		this.productionDate = productionDate;
 	}
-	public boolean isDamaged() {
-		return isDamaged;
+	public Boolean getDamaged() {
+		return damaged;
 	}
-	public void setDamaged(boolean isDamaged) {
-		this.isDamaged = isDamaged;
+	public void setDamaged(Boolean damaged) {
+		this.damaged = damaged;
 	}
 	public double getWeight() {
 		return weight;
@@ -80,12 +88,12 @@ public class Gun {
 	public void setLabel(Label label) {
 		this.label = label;
 	}
-	@ManyToMany
-	public List<User> getUser() {
-		return user;
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	public List<User> getUsers() {
+		return users;
 	}
-	public void setUser(List<User> user) {
-		this.user = user;
+	public void setUsers(List<User> users) {
+		this.users = users;
 	}
 
 	
