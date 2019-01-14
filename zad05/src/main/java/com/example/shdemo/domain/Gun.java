@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -24,11 +26,24 @@ public class Gun {
 	private Long id;
 	private String name;
 	private String productionDate;
-	private Boolean damaged;
+	private Boolean sold = false;
 	private Double weight;
 	private Producer producer;
 	private Label label;
 	private List<User> users = new ArrayList<User>();
+	
+	public Gun() {
+		super();
+	}
+
+	public Gun(String name, String productionDate, Boolean sold, Double weight, Producer producer) {
+		super();
+		this.name = name;
+		this.productionDate = productionDate;
+		this.sold = sold;
+		this.weight = weight;
+		this.producer = producer;
+	}
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,24 +53,28 @@ public class Gun {
 	public void setId(Long id) {
 		this.id = id;
 	}
+	@Column(nullable = false)
 	public String getName() {
 		return name;
 	}
 	public void setName(String name) {
 		this.name = name;
 	}
+	@Column(nullable = false)
 	public String getProductionDate() {
 		return productionDate;
 	}
 	public void setProductionDate(String productionDate) {
 		this.productionDate = productionDate;
 	}
-	public Boolean getDamaged() {
-		return damaged;
+	@Column(nullable = false)
+	public Boolean getSold() {
+		return sold;
 	}
-	public void setDamaged(Boolean damaged) {
-		this.damaged = damaged;
+	public void setSold(Boolean sold) {
+		this.sold = sold;
 	}
+	@Column(nullable = false, precision=5, scale=2)
 	public Double getWeight() {
 		return weight;
 	}
@@ -63,6 +82,7 @@ public class Gun {
 		this.weight = weight;
 	}
 	@ManyToOne
+	@JoinColumn(name="producer_id", nullable=false)
 	public Producer getProducer() {
 		return producer;
 	}

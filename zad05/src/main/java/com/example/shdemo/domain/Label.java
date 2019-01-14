@@ -1,5 +1,6 @@
 package com.example.shdemo.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,7 +15,6 @@ import javax.persistence.NamedQuery;
 public class Label {
 	
 	private Long id;
-	private String name;
 	private Boolean reserved;
 	private Double price;
 
@@ -26,18 +26,14 @@ public class Label {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
+	@Column(nullable = false)
 	public Boolean getReserved() {
 		return reserved;
 	}
 	public void setReserved(Boolean reserved) {
 		this.reserved = reserved;
 	}
+	@Column(nullable = false, precision=12, scale=2)
 	public Double getPrice() {
 		return price;
 	}

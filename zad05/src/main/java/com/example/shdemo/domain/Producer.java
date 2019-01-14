@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -26,6 +27,16 @@ public class Producer {
 	
 	private List<Gun> guns = new ArrayList<Gun>();
 	
+	public Producer() {
+		super();
+	}
+	
+	public Producer(String companyName, Boolean active) {
+		super();
+		this.companyName = companyName;
+		this.active = active;
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Long getId() {
@@ -34,12 +45,14 @@ public class Producer {
 	public void setId(Long id) {
 		this.id = id;
 	}
+	@Column(unique = true, nullable = false)
 	public String getCompanyName() {
 		return companyName;
 	}
 	public void setCompanyName(String companyName) {
 		this.companyName = companyName;
 	}
+	@Column(nullable = false)
 	public Boolean getActive() {
 		return active;
 	}

@@ -1,5 +1,6 @@
 package com.example.shdemo.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,8 +18,8 @@ public class User {
 	private String firstName;
 	private String lastName;
 	private String birthDate;
-	private Boolean ofAge;
-	private Integer numberOfRegisteredGuns;
+	private Boolean ofAge = true;
+	private Integer numberOfRegisteredGuns = 0;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,30 +29,35 @@ public class User {
 	public void setId(Long id) {
 		this.id = id;
 	}
+	@Column(nullable = false)
 	public String getFirstName() {
 		return firstName;
 	}
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
+	@Column(nullable = false)
 	public String getLastName() {
 		return lastName;
 	}
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
+	@Column(nullable = false)
 	public String getBirthDate() {
 		return birthDate;
 	}
 	public void setBirthDate(String birthDate) {
 		this.birthDate = birthDate;
 	}
+	@Column(nullable = false)
 	public Boolean getOfAge() {
 		return ofAge;
 	}
 	public void setOfAge(Boolean ofAge) {
 		this.ofAge = ofAge;
 	}
+	@Column(nullable = false)
 	public Integer getNumberOfRegisteredGuns() {
 		return numberOfRegisteredGuns;
 	}
