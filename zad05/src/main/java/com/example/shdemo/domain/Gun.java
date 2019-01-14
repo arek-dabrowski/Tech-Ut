@@ -21,33 +21,21 @@ import javax.persistence.OneToOne;
 })
 public class Gun {
 	
-	private long id;
-	
+	private Long id;
 	private String name;
 	private String productionDate;
 	private Boolean damaged;
-	private double weight;
+	private Double weight;
 	private Producer producer;
 	private Label label;
 	private List<User> users = new ArrayList<User>();
 	
-	public Gun() {
-		super();
-	}
-	public Gun(String name, String productionDate, Boolean damaged, double weight) {
-		super();
-		this.name = name;
-		this.productionDate = productionDate;
-		this.damaged = damaged;
-		this.weight = weight;
-	}
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public String getName() {
@@ -68,10 +56,10 @@ public class Gun {
 	public void setDamaged(Boolean damaged) {
 		this.damaged = damaged;
 	}
-	public double getWeight() {
+	public Double getWeight() {
 		return weight;
 	}
-	public void setWeight(double weight) {
+	public void setWeight(Double weight) {
 		this.weight = weight;
 	}
 	@ManyToOne

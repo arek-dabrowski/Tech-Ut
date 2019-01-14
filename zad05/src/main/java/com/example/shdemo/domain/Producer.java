@@ -21,11 +21,11 @@ import javax.persistence.OneToMany;
 public class Producer {
 
 	private Long id;
-	
 	private String companyName;
 	private Boolean active = true;
 	
 	private List<Gun> guns = new ArrayList<Gun>();
+
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,7 +47,7 @@ public class Producer {
 	public void setActive(Boolean active) {
 		this.active = active;
 	}
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "producer")
 	public List<Gun> getGuns() {
 		return guns;
 	}

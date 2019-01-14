@@ -8,20 +8,19 @@ import javax.persistence.Id;
 @Entity
 public class User {
 
-	private long id;
-	
+	private Long id;
 	private String firstName;
 	private String lastName;
 	private String birthDate;
-	private boolean isOfAge;
-	private int numberOfRegisteredGuns;
+	private Boolean ofAge;
+	private Integer numberOfRegisteredGuns;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public String getFirstName() {
@@ -42,16 +41,16 @@ public class User {
 	public void setBirthDate(String birthDate) {
 		this.birthDate = birthDate;
 	}
-	public boolean isOfAge() {
-		return isOfAge;
+	public boolean getOfAge() {
+		return ofAge;
 	}
-	public void setOfAge(boolean isOfAge) {
-		this.isOfAge = isOfAge;
+	public void setOfAge(Boolean ofAge) {
+		this.ofAge = ofAge;
 	}
-	public int getNumberOfRegisteredGuns() {
+	public Integer getNumberOfRegisteredGuns() {
 		return numberOfRegisteredGuns;
 	}
-	public void setNumberOfRegisteredGuns(int numberOfRegisteredGuns) {
+	public void setNumberOfRegisteredGuns(Integer numberOfRegisteredGuns) {
 		this.numberOfRegisteredGuns = numberOfRegisteredGuns;
 	}
 }

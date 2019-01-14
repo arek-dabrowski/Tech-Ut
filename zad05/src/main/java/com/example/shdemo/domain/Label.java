@@ -7,28 +7,18 @@ import javax.persistence.Id;
 
 @Entity
 public class Label {
-	private long id;
 	
+	private Long id;
 	private String name;
-	private boolean isReserved;
-	private double price;
-	public Label() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-	public Label(String name, boolean isReserved, double price) {
-		super();
-		this.name = name;
-		this.isReserved = isReserved;
-		this.price = price;
-	}
-	
+	private Boolean reserved;
+	private Double price;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public String getName() {
@@ -37,16 +27,16 @@ public class Label {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public boolean isReserved() {
-		return isReserved;
+	public boolean getReserved() {
+		return reserved;
 	}
-	public void setReserved(boolean isReserved) {
-		this.isReserved = isReserved;
+	public void setReserved(Boolean reserved) {
+		this.reserved = reserved;
 	}
-	public double getPrice() {
+	public Double getPrice() {
 		return price;
 	}
-	public void setPrice(double price) {
+	public void setPrice(Double price) {
 		this.price = price;
 	}
 	
