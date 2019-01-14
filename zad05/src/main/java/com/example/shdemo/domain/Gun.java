@@ -10,11 +10,11 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -31,6 +31,7 @@ public class Gun {
 	private Producer producer;
 	private Label label;
 	private List<User> users = new ArrayList<User>();
+	private List<Distributor> distributors = new ArrayList<Distributor>();
 	
 	public Gun() {
 		super();
@@ -81,15 +82,14 @@ public class Gun {
 	public void setWeight(Double weight) {
 		this.weight = weight;
 	}
-	@ManyToOne
-	@JoinColumn(name = "producer_id", nullable = false)
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	public Producer getProducer() {
 		return producer;
 	}
 	public void setProducer(Producer producer) {
 		this.producer = producer;
 	}
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	public Label getLabel() {
 		return label;
 	}
@@ -103,6 +103,12 @@ public class Gun {
 	public void setUsers(List<User> users) {
 		this.users = users;
 	}
-
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	public List<Distributor> getDistributors() {
+		return distributors;
+	}
+	public void setDistributors(List<Distributor> distributors) {
+		this.distributors = distributors;
+	}
 	
 }

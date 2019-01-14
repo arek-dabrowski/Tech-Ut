@@ -10,23 +10,23 @@ import javax.persistence.NamedQuery;
 
 @Entity
 @NamedQueries({
-	@NamedQuery(name = "producer.all", query = "Select p from Producer p"),
-	@NamedQuery(name = "producer.active", query = "Select p from Producer p where p.active = true")
+	@NamedQuery(name = "distributor.all", query = "Select d from Distributor d"),
+	@NamedQuery(name = "distributor.country", query = "Select d from Distributor d where d.country = :country")
 })
-public class Producer {
+public class Distributor {
 
 	private Long id;
 	private String companyName;
-	private Boolean active = true;
+	private String country;
 	
-	public Producer() {
+	public Distributor() {
 		super();
 	}
 	
-	public Producer(String companyName, Boolean active) {
+	public Distributor(String companyName, String country) {
 		super();
 		this.companyName = companyName;
-		this.active = active;
+		this.country = country;
 	}
 
 	@Id
@@ -45,11 +45,11 @@ public class Producer {
 		this.companyName = companyName;
 	}
 	@Column(nullable = false)
-	public Boolean getActive() {
-		return active;
+	public String getCountry() {
+		return country;
 	}
-	public void setActive(Boolean active) {
-		this.active = active;
+	public void setCountry(String country) {
+		this.country = country;
 	}
 	
 }
