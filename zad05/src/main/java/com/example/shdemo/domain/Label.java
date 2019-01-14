@@ -4,8 +4,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 @Entity
+@NamedQueries({ 
+	@NamedQuery(name = "label.all", query = "Select l from Label l")
+})
 public class Label {
 	
 	private Long id;
@@ -27,7 +32,7 @@ public class Label {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public boolean getReserved() {
+	public Boolean getReserved() {
 		return reserved;
 	}
 	public void setReserved(Boolean reserved) {

@@ -25,7 +25,6 @@ public class Producer {
 	private Boolean active = true;
 	
 	private List<Gun> guns = new ArrayList<Gun>();
-
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

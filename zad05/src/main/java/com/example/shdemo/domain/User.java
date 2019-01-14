@@ -4,8 +4,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 @Entity
+@NamedQueries({ 
+	@NamedQuery(name = "user.all", query = "Select u from User u")
+})
 public class User {
 
 	private Long id;
@@ -41,7 +46,7 @@ public class User {
 	public void setBirthDate(String birthDate) {
 		this.birthDate = birthDate;
 	}
-	public boolean getOfAge() {
+	public Boolean getOfAge() {
 		return ofAge;
 	}
 	public void setOfAge(Boolean ofAge) {
