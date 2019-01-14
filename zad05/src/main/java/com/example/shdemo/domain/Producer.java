@@ -4,31 +4,27 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 @Entity
+@NamedQueries({
+	@NamedQuery(name = "producer.all", query = "Select p from Producer p"),
+	@NamedQuery(name = "producer.active", query = "Select p from Producer p where p.active = true")
+})
 public class Producer {
 
-	private long id;
+	private Long id;
 	
 	private String companyName;
-	private boolean isActive;
-	
-	public Producer() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-	public Producer(String companyName, boolean isActive) {
-		super();
-		this.companyName = companyName;
-		this.isActive = isActive;
-	}
+	private Boolean active = true;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public String getCompanyName() {
@@ -37,11 +33,11 @@ public class Producer {
 	public void setCompanyName(String companyName) {
 		this.companyName = companyName;
 	}
-	public boolean isActive() {
-		return isActive;
+	public Boolean getActive() {
+		return active;
 	}
-	public void setActive(boolean isActive) {
-		this.isActive = isActive;
+	public void setActive(Boolean active) {
+		this.active = active;
 	}
 	
 }

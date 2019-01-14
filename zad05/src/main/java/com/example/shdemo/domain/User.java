@@ -15,20 +15,6 @@ public class User {
 	private String birthDate;
 	private boolean isOfAge;
 	private int numberOfRegisteredGuns;
-	
-	
-	public User() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-	public User(String firstName, String lastName, String birthDate, boolean isOfAge, int numberOfRegisteredGuns) {
-		super();
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.birthDate = birthDate;
-		this.isOfAge = isOfAge;
-		this.numberOfRegisteredGuns = numberOfRegisteredGuns;
-	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
