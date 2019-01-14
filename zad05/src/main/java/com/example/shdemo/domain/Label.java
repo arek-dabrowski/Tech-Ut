@@ -33,7 +33,7 @@ public class Label {
 	public void setReserved(Boolean reserved) {
 		this.reserved = reserved;
 	}
-	@Column(nullable = false, precision=12, scale=2)
+	@Column(nullable = false, precision = 12, scale = 2)
 	public Double getPrice() {
 		return price;
 	}

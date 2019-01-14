@@ -74,7 +74,7 @@ public class Gun {
 	public void setSold(Boolean sold) {
 		this.sold = sold;
 	}
-	@Column(nullable = false, precision=5, scale=2)
+	@Column(nullable = false, precision = 5, scale = 2)
 	public Double getWeight() {
 		return weight;
 	}
@@ -82,7 +82,7 @@ public class Gun {
 		this.weight = weight;
 	}
 	@ManyToOne
-	@JoinColumn(name="producer_id", nullable=false)
+	@JoinColumn(name = "producer_id", nullable = false)
 	public Producer getProducer() {
 		return producer;
 	}
