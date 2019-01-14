@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.shdemo.domain.Gun;
 import com.example.shdemo.domain.Producer;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -29,6 +30,11 @@ public class ProducerTest {
 	private final String COMPANY_NAME_2 = "S&W";
 	private final Boolean ACTIVE_2 = true;
 
+	private final String GUN_NAME_1 = "MP5";
+	private final String GUN_DATE_1 = "16-04-2015";
+	private final Boolean SOLD_1 = false;
+	private final Double WEIGHT_1 = 2.19;
+	
 	@Test
 	public void addProducerCheck() {
 		List<Producer> retrievedProducers = serviceManager.getAllProducers();
@@ -64,6 +70,9 @@ public class ProducerTest {
 		Long producer1Id = serviceManager.addProducer(producer1);
 		serviceManager.addProducer(producer2);
 		
+		Gun gun = new Gun(GUN_NAME_1, GUN_DATE_1, SOLD_1, WEIGHT_1, producer1);
+		Long gunId = serviceManager.addGun(gun);
+		
 		Producer producerToDelete = serviceManager.findProducerById(producer1Id);
 		
 		int beforeDeleteSize = serviceManager.getAllProducers().size();
@@ -71,8 +80,10 @@ public class ProducerTest {
 		int afterDeleteSize = serviceManager.getAllProducers().size();
 		
 		Producer lastProducer = serviceManager.getAllProducers().get(afterDeleteSize-1);
+		Gun retrievedGun = serviceManager.findGunById(gunId);
 		
 		assertEquals(beforeDeleteSize, afterDeleteSize + 1);
+		assertEquals(null, retrievedGun.getProducer());
 		assertEquals(COMPANY_NAME_2, lastProducer.getCompanyName());
 		assertEquals(ACTIVE_2, lastProducer.getActive());		
 	}

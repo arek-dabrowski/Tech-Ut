@@ -17,8 +17,12 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 @Entity
 @NamedQueries({ 
+	@NamedQuery(name = "gun.findByProd", query = "Select g from Gun g where g.producer.id = :id"),
 	@NamedQuery(name = "gun.all", query = "Select g from Gun g")
 })
 public class Gun {
@@ -82,7 +86,8 @@ public class Gun {
 	public void setWeight(Double weight) {
 		this.weight = weight;
 	}
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	public Producer getProducer() {
 		return producer;
 	}

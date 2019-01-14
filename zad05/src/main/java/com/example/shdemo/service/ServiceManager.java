@@ -2,6 +2,7 @@ package com.example.shdemo.service;
 
 import java.util.List;
 
+import com.example.shdemo.domain.Distributor;
 import com.example.shdemo.domain.Gun;
 import com.example.shdemo.domain.Label;
 import com.example.shdemo.domain.Producer;
@@ -13,6 +14,11 @@ public interface ServiceManager {
 	List<Producer> getAllProducers();
 	void deleteProducer(Producer producer);
 	Producer findProducerById(Long id);
+	
+	Long addDistributor(Distributor distributor);
+	List<Distributor> getAllDistributors();
+	void deleteDistributor(Distributor distributor);
+	Distributor findDistributorById(Long id);
 	
 	Long addGun(Gun gun);
 	List<Gun> getAllGuns();

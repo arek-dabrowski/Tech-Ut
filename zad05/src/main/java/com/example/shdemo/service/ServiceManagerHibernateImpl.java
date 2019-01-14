@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.shdemo.domain.Distributor;
 import com.example.shdemo.domain.Gun;
 import com.example.shdemo.domain.Label;
 import com.example.shdemo.domain.Producer;
@@ -42,6 +43,10 @@ public class ServiceManagerHibernateImpl implements ServiceManager {
 	@Override
 	public void deleteProducer(Producer producer) {
 		producer = (Producer) sessionFactory.getCurrentSession().get(Producer.class, producer.getId());
+		for (Gun gun : findGunsByProducer(producer.getId())) {
+			gun.setProducer(null);
+			sessionFactory.getCurrentSession().update(gun);
+		}
 		sessionFactory.getCurrentSession().delete(producer);
 	}
 
@@ -49,6 +54,30 @@ public class ServiceManagerHibernateImpl implements ServiceManager {
 	public Producer findProducerById(Long id) {
 		return (Producer) sessionFactory.getCurrentSession().get(Producer.class, id);
 	}
+	
+	@Override
+	public Long addDistributor(Distributor distributor) {
+		distributor.setId(null);
+		return (Long) sessionFactory.getCurrentSession().save(distributor);
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<Distributor> getAllDistributors() {
+		return sessionFactory.getCurrentSession().getNamedQuery("distributor.all").list();
+	}
+
+	@Override
+	public void deleteDistributor(Distributor distributor) {
+		distributor = (Distributor) sessionFactory.getCurrentSession().get(Distributor.class, distributor.getId());
+		sessionFactory.getCurrentSession().delete(distributor);
+	}
+
+	@Override
+	public Distributor findDistributorById(Long id) {
+		return (Distributor) sessionFactory.getCurrentSession().get(Distributor.class, id);
+	}
+
 
 	@Override
 	public Long addGun(Gun gun) {
@@ -72,6 +101,12 @@ public class ServiceManagerHibernateImpl implements ServiceManager {
 	public Gun findGunById(Long id) {
 		return (Gun) sessionFactory.getCurrentSession().get(Gun.class, id);
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Gun> findGunsByProducer(Long id) {
+		return sessionFactory.getCurrentSession().getNamedQuery("gun.findByProd").setLong("id", id).list();
+	}
+
 
 
 	@Override
@@ -139,5 +174,5 @@ public class ServiceManagerHibernateImpl implements ServiceManager {
 		// TODO Auto-generated method stub
 		
 	}
-
+	
 }
