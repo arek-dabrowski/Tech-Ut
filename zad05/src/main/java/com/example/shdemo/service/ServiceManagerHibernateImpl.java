@@ -29,6 +29,7 @@ public class ServiceManagerHibernateImpl implements ServiceManager {
 		this.sessionFactory = sessionFactory;
 	}
 
+	/*Producer methods*/
 	@Override
 	public Long addProducer(Producer producer) {
 		producer.setId(null);
@@ -61,6 +62,7 @@ public class ServiceManagerHibernateImpl implements ServiceManager {
 		return (Producer) sessionFactory.getCurrentSession().get(Producer.class, id);
 	}
 	
+	/*Distributor methods*/
 	@Override
 	public Long addDistributor(Distributor distributor) {
 		distributor.setId(null);
@@ -110,7 +112,7 @@ public class ServiceManagerHibernateImpl implements ServiceManager {
 		return (Distributor) sessionFactory.getCurrentSession().get(Distributor.class, id);
 	}
 
-
+	/*Gun methods*/
 	@Override
 	public Long addGun(Gun gun) {
 		gun.setId(null);
@@ -145,6 +147,7 @@ public class ServiceManagerHibernateImpl implements ServiceManager {
 		return sessionFactory.getCurrentSession().getNamedQuery("gun.findByProd").setLong("id", id).list();
 	}
 
+	/*Label methods*/
 	@Override
 	public Long addLabel(Label label) {
 		label.setId(null);
@@ -193,7 +196,7 @@ public class ServiceManagerHibernateImpl implements ServiceManager {
 		return (Label) sessionFactory.getCurrentSession().get(Label.class, id);
 	}
 
-
+	/*User methods*/
 	@Override
 	@SuppressWarnings("deprecation")
 	public Long addUser(User user) {
@@ -264,6 +267,7 @@ public class ServiceManagerHibernateImpl implements ServiceManager {
 		return (User) sessionFactory.getCurrentSession().get(User.class, id);
 	}
 
+	/*Bussiness methods*/
 	@Override
 	public Boolean sellGun(User user, Gun gun) {
 		user = (User) sessionFactory.getCurrentSession().get(User.class, user.getId());
