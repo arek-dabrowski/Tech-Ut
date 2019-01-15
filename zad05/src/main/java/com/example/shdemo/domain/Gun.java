@@ -1,6 +1,7 @@
 package com.example.shdemo.domain;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -16,6 +17,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -29,7 +32,7 @@ public class Gun {
 	
 	private Long id;
 	private String name;
-	private String productionDate;
+	private Date productionDate = new Date();
 	private Boolean sold = false;
 	private Double weight;
 	private Producer producer;
@@ -41,7 +44,7 @@ public class Gun {
 		super();
 	}
 
-	public Gun(String name, String productionDate, Boolean sold, Double weight, Producer producer) {
+	public Gun(String name, Date productionDate, Boolean sold, Double weight, Producer producer) {
 		super();
 		this.name = name;
 		this.productionDate = productionDate;
@@ -50,7 +53,7 @@ public class Gun {
 		this.producer = producer;
 	}
 	
-	public Gun(String name, String productionDate, Boolean sold, Double weight) {
+	public Gun(String name, Date productionDate, Boolean sold, Double weight) {
 		super();
 		this.name = name;
 		this.productionDate = productionDate;
@@ -74,10 +77,11 @@ public class Gun {
 		this.name = name;
 	}
 	@Column(nullable = false)
-	public String getProductionDate() {
+	@Temporal(TemporalType.DATE)
+	public Date getProductionDate() {
 		return productionDate;
 	}
-	public void setProductionDate(String productionDate) {
+	public void setProductionDate(Date productionDate) {
 		this.productionDate = productionDate;
 	}
 	@Column(nullable = false)

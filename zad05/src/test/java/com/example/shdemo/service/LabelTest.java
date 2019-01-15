@@ -2,6 +2,7 @@ package com.example.shdemo.service;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Test;
@@ -32,12 +33,14 @@ public class LabelTest {
 	private final Double PRICE_2 = 2999.99;
 
 	private final String GUN_NAME_1 = "MP5";
-	private final String GUN_DATE_1 = "16-04-2015";
+	@SuppressWarnings("deprecation")
+	private final Date GUN_DATE_1 = new Date(2015, 4, 16);
 	private final Boolean SOLD_1 = false;
 	private final Double WEIGHT_1 = 2.19;
 	
 	private final String GUN_NAME_2 = "AK-47";
-	private final String GUN_DATE_2 = "01-01-1999";
+	@SuppressWarnings("deprecation")
+	private final Date GUN_DATE_2 = new Date(1999, 1, 1);
 	private final Boolean SOLD_2 = false;
 	private final Double WEIGHT_2 = 3.14;
 	

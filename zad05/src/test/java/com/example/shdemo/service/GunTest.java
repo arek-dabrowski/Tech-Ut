@@ -2,6 +2,7 @@ package com.example.shdemo.service;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Test;
@@ -28,7 +29,8 @@ public class GunTest {
 	private final Boolean ACTIVE_1 = true;
 	
 	private final String GUN_NAME_1 = "MP5";
-	private final String GUN_DATE_1 = "16-04-2015";
+	@SuppressWarnings("deprecation")
+	private final Date GUN_DATE_1 = new Date(2015, 4, 16);
 	private final Boolean SOLD_1 = false;
 	private final Double WEIGHT_1 = 2.19;
 	
