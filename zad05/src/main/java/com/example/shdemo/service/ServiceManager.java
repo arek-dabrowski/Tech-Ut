@@ -24,6 +24,7 @@ public interface ServiceManager {
 	List<Gun> getAllGuns();
 	void deleteGun(Gun gun);
 	Gun findGunById(Long id);
+	List<Gun> findGunsByProducer(Long id);
 	
 	Long addLabel(Label label);
 	List<Label> getAllLabels();
@@ -38,4 +39,5 @@ public interface ServiceManager {
 	List<Gun> getOwnedGuns(User user);
 	void sellGun(Long userId, Long gunId);
 	void reserveGun(Long labelId, Long gunId);
+	Long addDistributorToGun(Gun gun, Distributor distributor);
 }

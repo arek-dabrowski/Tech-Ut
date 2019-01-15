@@ -50,6 +50,14 @@ public class Gun {
 		this.producer = producer;
 	}
 	
+	public Gun(String name, String productionDate, Boolean sold, Double weight) {
+		super();
+		this.name = name;
+		this.productionDate = productionDate;
+		this.sold = sold;
+		this.weight = weight;
+	}
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Long getId() {

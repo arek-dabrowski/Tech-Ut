@@ -70,6 +70,19 @@ public class ServiceManagerHibernateImpl implements ServiceManager {
 	@Override
 	public void deleteDistributor(Distributor distributor) {
 		distributor = (Distributor) sessionFactory.getCurrentSession().get(Distributor.class, distributor.getId());
+
+		for (Gun gun : getAllGuns()) {
+			Distributor toRemove = null;
+			for(Distributor dist : gun.getDistributors()) {
+				if(dist.getId().compareTo(distributor.getId()) == 0) {
+					toRemove = dist;
+					break;
+				}
+			}
+			if (toRemove != null)
+				gun.getDistributors().remove(toRemove);	
+		}
+		
 		sessionFactory.getCurrentSession().delete(distributor);
 	}
 
@@ -102,12 +115,11 @@ public class ServiceManagerHibernateImpl implements ServiceManager {
 		return (Gun) sessionFactory.getCurrentSession().get(Gun.class, id);
 	}
 	
+	@Override
 	@SuppressWarnings("unchecked")
 	public List<Gun> findGunsByProducer(Long id) {
 		return sessionFactory.getCurrentSession().getNamedQuery("gun.findByProd").setLong("id", id).list();
 	}
-
-
 
 	@Override
 	public Long addLabel(Label label) {
@@ -173,6 +185,13 @@ public class ServiceManagerHibernateImpl implements ServiceManager {
 	public void reserveGun(Long labelId, Long gunId) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public Long addDistributorToGun(Gun gun, Distributor distributor) {
+		gun = (Gun) sessionFactory.getCurrentSession().get(Gun.class, gun.getId());
+		gun.getDistributors().add(distributor);
+		return (Long) sessionFactory.getCurrentSession().save(distributor);
 	}
 	
 }
