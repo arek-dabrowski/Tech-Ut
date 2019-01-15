@@ -265,12 +265,6 @@ public class ServiceManagerHibernateImpl implements ServiceManager {
 	}
 
 	@Override
-	public List<Gun> getOwnedGuns(User user) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public Boolean sellGun(User user, Gun gun) {
 		user = (User) sessionFactory.getCurrentSession().get(User.class, user.getId());
 		gun = (Gun) sessionFactory.getCurrentSession().get(Gun.class, gun.getId());

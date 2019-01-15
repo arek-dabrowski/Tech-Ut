@@ -50,7 +50,6 @@ public interface ServiceManager {
 	User findUserById(Long id);
 	
 	/*Business methods*/
-	List<Gun> getOwnedGuns(User user);
 	Boolean sellGun(User user, Gun gun);
 	void reserveGun(Gun gun);
 	Boolean registerGun(User user, Gun gun);

@@ -24,16 +24,12 @@ public class GunTest {
 	@Autowired
 	ServiceManager serviceManager;
 
-//	private final String COMPANY_NAME_1 = "H&K";
-//	private final Boolean ACTIVE_1 = true;
-	
 	private final String GUN_NAME_1 = "MP5";
 	@SuppressWarnings("deprecation")
 	private final Date GUN_DATE_1 = new Date(2015, 4, 16);
 	private final Boolean SOLD_1 = false;
 	private final Double WEIGHT_1 = 2.19;
 	
-	private final String GUN_NAME_2 = "AK-47";
 	@SuppressWarnings("deprecation")
 	private final Date GUN_DATE_2 = new Date(1999, 2, 15);
 	private final Boolean SOLD_2 = true;
