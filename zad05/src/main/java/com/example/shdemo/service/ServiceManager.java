@@ -51,7 +51,7 @@ public interface ServiceManager {
 	
 	/*Business methods*/
 	List<Gun> getOwnedGuns(User user);
-	void sellGun(Long userId, Long gunId);
-	void reserveGun(Long labelId, Long gunId);
-	void registerGun(Long userId, Long gunId);
+	Boolean sellGun(User user, Gun gun);
+	void reserveGun(Gun gun);
+	Boolean registerGun(User user, Gun gun);
 }

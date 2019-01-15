@@ -91,7 +91,7 @@ public class UserTest {
 		assertEquals(FIRST_NAME_2, retrievedUser.getFirstName());
 		assertEquals(LAST_NAME_1, retrievedUser.getLastName());		
 		assertEquals(YOB_2, retrievedUser.getBirthDate());
-		assertEquals(true, retrievedUser.getOfAge());
+		assertEquals(false, retrievedUser.getOfAge());
 		assertEquals(new Integer(0), retrievedUser.getNumberOfRegisteredGuns());
 	}
 	

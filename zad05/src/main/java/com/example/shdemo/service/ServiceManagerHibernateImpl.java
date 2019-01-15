@@ -247,8 +247,15 @@ public class ServiceManagerHibernateImpl implements ServiceManager {
 		sessionFactory.getCurrentSession().delete(user);
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void updateUser(User user) {
+		user.getBirthDate().setYear(user.getBirthDate().getYear() - 1900);
+		user.getBirthDate().setMonth(user.getBirthDate().getMonth() - 1);
+		Date currentDate = new Date();
+		currentDate.setYear(currentDate.getYear() - 18);
+		if(currentDate.compareTo(user.getBirthDate()) == -1) user.setOfAge(false);
+
 		sessionFactory.getCurrentSession().save(user);
 	}
 	
@@ -264,21 +271,51 @@ public class ServiceManagerHibernateImpl implements ServiceManager {
 	}
 
 	@Override
-	public void sellGun(Long userId, Long gunId) {
-		// TODO Auto-generated method stub
+	public Boolean sellGun(User user, Gun gun) {
+		user = (User) sessionFactory.getCurrentSession().get(User.class, user.getId());
+		gun = (Gun) sessionFactory.getCurrentSession().get(Gun.class, gun.getId());
 		
+		if(gun.getLabel().getReserved())
+			return false;
+		else if (user.getOfAge() && !gun.getSold()) {
+			gun.setSold(true);
+			gun.getUsers().add(user);
+			sessionFactory.getCurrentSession().save(gun);
+			
+			deleteLabel(gun.getLabel());
+			
+			user.setNumberOfRegisteredGuns(user.getNumberOfRegisteredGuns() + 1);
+			sessionFactory.getCurrentSession().save(user);
+			
+			return true;
+		}
+		else return false;
 	}
 
 	@Override
-	public void reserveGun(Long labelId, Long gunId) {
-		// TODO Auto-generated method stub
+	public void reserveGun(Gun gun) {
+		gun = (Gun) sessionFactory.getCurrentSession().get(Gun.class, gun.getId());
 		
+		if(gun.getLabel().getReserved()) gun.getLabel().setReserved(false);
+		else gun.getLabel().setReserved(true);
+		
+		updateLabel(gun.getLabel());
 	}
 
 	@Override
-	public void registerGun(Long userId, Long gunId) {
-		// TODO Auto-generated method stub
+	public Boolean registerGun(User user, Gun gun) {
+		user = (User) sessionFactory.getCurrentSession().get(User.class, user.getId());
+		gun = (Gun) sessionFactory.getCurrentSession().get(Gun.class, gun.getId());
 		
+		if (user.getOfAge() && gun.getSold()) {
+			gun.getUsers().add(user);
+			sessionFactory.getCurrentSession().save(gun);
+			
+			user.setNumberOfRegisteredGuns(user.getNumberOfRegisteredGuns() + 1);
+			sessionFactory.getCurrentSession().save(user);
+			return true;
+		}
+		else return false;
 	}
 
 }
