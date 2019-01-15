@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.shdemo.domain.Gun;
 import com.example.shdemo.domain.Label;
-import com.example.shdemo.domain.Producer;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:/beans.xml" })

@@ -18,13 +18,13 @@ public interface ServiceManager {
 	
 	/*Distributor methods*/
 	Long addDistributor(Distributor distributor);
+	Long addDistributorToGun(Gun gun, Distributor distributor);
 	List<Distributor> getAllDistributors();
 	void deleteDistributor(Distributor distributor);
 	Distributor findDistributorById(Long id);
 	
 	/*Gun methods*/
 	Long addGun(Gun gun);
-	Long addDistributorToGun(Gun gun, Distributor distributor);
 	List<Gun> getAllGuns();
 	void deleteGun(Gun gun);
 	Gun findGunById(Long id);
@@ -39,6 +39,7 @@ public interface ServiceManager {
 	
 	/*User methods*/
 	Long addUser(User user);
+	Long addUserToGun(Gun gun, User user);
 	List<User> getAllUsers();
 	void deleteUser(User user);
 	User findUserById(Long id);

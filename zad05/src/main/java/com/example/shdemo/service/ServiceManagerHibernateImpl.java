@@ -61,6 +61,14 @@ public class ServiceManagerHibernateImpl implements ServiceManager {
 		distributor.setId(null);
 		return (Long) sessionFactory.getCurrentSession().save(distributor);
 	}
+	
+	@Override
+	public Long addDistributorToGun(Gun gun, Distributor distributor) {
+		gun = (Gun) sessionFactory.getCurrentSession().get(Gun.class, gun.getId());
+		gun.getDistributors().add(distributor);
+		sessionFactory.getCurrentSession().update(gun);
+		return (Long) sessionFactory.getCurrentSession().save(distributor);
+	}
 
 	@Override
 	@SuppressWarnings("unchecked")
@@ -170,9 +178,27 @@ public class ServiceManagerHibernateImpl implements ServiceManager {
 	@SuppressWarnings("deprecation")
 	public Long addUser(User user) {
 		user.setId(null);
+		user.getBirthDate().setYear(user.getBirthDate().getYear() - 1900);
+		user.getBirthDate().setMonth(user.getBirthDate().getMonth() - 1);
 		Date currentDate = new Date();
-		currentDate.setYear(currentDate.getYear() + 1900 - 18);
+		currentDate.setYear(currentDate.getYear() - 18);
 		if(currentDate.compareTo(user.getBirthDate()) == -1) user.setOfAge(false);
+		return (Long) sessionFactory.getCurrentSession().save(user);
+	}
+	
+	@Override
+	@SuppressWarnings("deprecation")
+	public Long addUserToGun(Gun gun, User user) {
+		user.setId(null);
+		user.getBirthDate().setYear(user.getBirthDate().getYear() - 1900);
+		user.getBirthDate().setMonth(user.getBirthDate().getMonth() - 1);
+		Date currentDate = new Date();
+		currentDate.setYear(currentDate.getYear() - 18);
+		if(currentDate.compareTo(user.getBirthDate()) == -1) user.setOfAge(false);
+		
+		gun = (Gun) sessionFactory.getCurrentSession().get(Gun.class, gun.getId());
+		gun.getUsers().add(user);
+		sessionFactory.getCurrentSession().update(gun);
 		return (Long) sessionFactory.getCurrentSession().save(user);
 	}
 
@@ -185,6 +211,19 @@ public class ServiceManagerHibernateImpl implements ServiceManager {
 	@Override
 	public void deleteUser(User user) {
 		user = (User) sessionFactory.getCurrentSession().get(User.class, user.getId());
+		
+		for (Gun gun : getAllGuns()) {
+			User toRemove = null;
+			for(User aUser : gun.getUsers()) {
+				if(aUser.getId().compareTo(user.getId()) == 0) {
+					toRemove = aUser;
+					break;
+				}
+			}
+			if (toRemove != null)
+				gun.getUsers().remove(toRemove);	
+		}
+		
 		sessionFactory.getCurrentSession().delete(user);
 	}
 
@@ -209,13 +248,6 @@ public class ServiceManagerHibernateImpl implements ServiceManager {
 	public void reserveGun(Long labelId, Long gunId) {
 		// TODO Auto-generated method stub
 		
-	}
-
-	@Override
-	public Long addDistributorToGun(Gun gun, Distributor distributor) {
-		gun = (Gun) sessionFactory.getCurrentSession().get(Gun.class, gun.getId());
-		gun.getDistributors().add(distributor);
-		return (Long) sessionFactory.getCurrentSession().save(distributor);
 	}
 
 	@Override
