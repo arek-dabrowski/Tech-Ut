@@ -1,6 +1,6 @@
 package com.example.shdemo.service;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.util.List;
 
@@ -54,7 +54,6 @@ public class DistributorTest {
 		assertEquals(COUNTRY_1, retrievedDistributor.getCountry());		
 	}
 	
-	
 	@Test
 	public void deleteDistributorCheck() {
 		List<Distributor> retrievedDistributors = serviceManager.getAllDistributors();
@@ -64,25 +63,55 @@ public class DistributorTest {
 				serviceManager.deleteDistributor(distributor);
 			}
 		}
+		
+		Distributor distributor1 = new Distributor(COMPANY_NAME_1, COUNTRY_1);
+		Distributor distributor2 = new Distributor(COMPANY_NAME_2, COUNTRY_2);
+		Long distributor1Id = serviceManager.addDistributor(distributor1);
+		Long distributor2Id = serviceManager.addDistributor(distributor2);
+		Distributor distributorToDelete = serviceManager.findDistributorById(distributor2Id);
+		
+		int beforeDeleteSize = serviceManager.getAllDistributors().size();
+		serviceManager.deleteDistributor(distributorToDelete);
+		int afterDeleteSize = serviceManager.getAllDistributors().size();
+
+		Distributor lastDistributor = serviceManager.getAllDistributors().get(afterDeleteSize-1);
+		
+		assertEquals(beforeDeleteSize, afterDeleteSize + 1);
+		assertEquals(distributor1Id, lastDistributor.getId());
+		assertEquals(COMPANY_NAME_1, lastDistributor.getCompanyName());
+		assertEquals(COUNTRY_1, lastDistributor.getCountry());
+	}
+	
+	@Test
+	public void deleteDistributorAssignedToGunCheck() {
+		List<Distributor> retrievedDistributors = serviceManager.getAllDistributors();
+
+		for (Distributor distributor : retrievedDistributors) {
+			if (distributor.getCompanyName().equals(COMPANY_NAME_1) || distributor.getCompanyName().equals(COMPANY_NAME_2)) {
+				serviceManager.deleteDistributor(distributor);
+			}
+		}
+		
 		Gun gun = new Gun(GUN_NAME_1, GUN_DATE_1, SOLD_1, WEIGHT_1);
-		Long gunId = serviceManager.addGun(gun);
+		serviceManager.addGun(gun);
+		
 		Distributor distributor1 = new Distributor(COMPANY_NAME_1, COUNTRY_1);
 		Distributor distributor2 = new Distributor(COMPANY_NAME_2, COUNTRY_2);
 		Long distributor1Id = serviceManager.addDistributorToGun(gun, distributor1);
-		serviceManager.addDistributorToGun(gun, distributor2);
+		Long distributor2Id = serviceManager.addDistributorToGun(gun, distributor2);
 		
-		Distributor distributorToDelete = serviceManager.findDistributorById(distributor1Id);
+		Distributor distributorToDelete = serviceManager.findDistributorById(distributor2Id);
 		
 		int beforeDeleteSize = serviceManager.getAllDistributors().size();
 		serviceManager.deleteDistributor(distributorToDelete);
 		int afterDeleteSize = serviceManager.getAllDistributors().size();
 		
 		Distributor lastDistributor = serviceManager.getAllDistributors().get(afterDeleteSize-1);
-		Gun retrievedGun = serviceManager.findGunById(gunId);
 		
 		assertEquals(beforeDeleteSize, afterDeleteSize + 1);
-		assertEquals(COMPANY_NAME_2, lastDistributor.getCompanyName());
-		assertEquals(COUNTRY_2, lastDistributor.getCountry());		
+		assertEquals(distributor1Id, lastDistributor.getId());
+		assertEquals(COMPANY_NAME_1, lastDistributor.getCompanyName());
+		assertEquals(COUNTRY_1, lastDistributor.getCountry());		
 	}
 	
 }

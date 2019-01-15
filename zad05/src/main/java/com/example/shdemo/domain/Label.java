@@ -17,6 +17,16 @@ public class Label {
 	private Long id;
 	private Boolean reserved;
 	private Double price;
+	
+	public Label() {
+		super();
+	}
+	
+	public Label(Boolean reserved, Double price) {
+		super();
+		this.reserved = reserved;
+		this.price = price;
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

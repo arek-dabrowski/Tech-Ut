@@ -123,26 +123,45 @@ public class ServiceManagerHibernateImpl implements ServiceManager {
 
 	@Override
 	public Long addLabel(Label label) {
-		// TODO Auto-generated method stub
-		return null;
+		label.setId(null);
+		return (Long) sessionFactory.getCurrentSession().save(label);
+	}
+	
+	@Override
+	public Long addLabelToGun(Gun gun, Label label) {
+		gun = (Gun) sessionFactory.getCurrentSession().get(Gun.class, gun.getId());
+		label.setId(null);
+		if (gun != null) {
+			gun.setLabel(label);
+			sessionFactory.getCurrentSession().update(gun);
+		}
+		return (Long) sessionFactory.getCurrentSession().save(label);
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public List<Label> getAllLabels() {
-		// TODO Auto-generated method stub
-		return null;
+		return sessionFactory.getCurrentSession().getNamedQuery("label.all").list();
 	}
 
 	@Override
 	public void deleteLabel(Label label) {
-		// TODO Auto-generated method stub
+		label = (Label) sessionFactory.getCurrentSession().get(Label.class, label.getId());
+
+		for (Gun gun : getAllGuns()) {
+			if(gun.getLabel().getId().compareTo(label.getId()) == 0) {
+				gun.setLabel(null);
+				sessionFactory.getCurrentSession().update(gun);
+				break;
+			}
+		}
 		
+		sessionFactory.getCurrentSession().delete(label);
 	}
 
 	@Override
 	public Label findLabelById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return (Label) sessionFactory.getCurrentSession().get(Label.class, id);
 	}
 
 	@Override
