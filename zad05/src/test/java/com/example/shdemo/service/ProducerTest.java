@@ -29,7 +29,7 @@ public class ProducerTest {
 	private final Boolean ACTIVE_1 = true;
 	
 	private final String COMPANY_NAME_2 = "S&W";
-	private final Boolean ACTIVE_2 = true;
+	private final Boolean ACTIVE_2 = false;
 
 	private final String GUN_NAME_1 = "MP5";
 	@SuppressWarnings("deprecation")
@@ -53,6 +53,29 @@ public class ProducerTest {
 		
 		assertEquals(COMPANY_NAME_1, retrievedProducer.getCompanyName());
 		assertEquals(ACTIVE_1, retrievedProducer.getActive());		
+	}
+	
+	@Test
+	public void updateProducerCheck() {
+		List<Producer> retrievedProducers = serviceManager.getAllProducers();
+
+		for (Producer producer : retrievedProducers) {
+			if (producer.getCompanyName().equals(COMPANY_NAME_1)) {
+				serviceManager.deleteProducer(producer);
+			}
+		}
+		
+		Producer producer = new Producer(COMPANY_NAME_1, ACTIVE_1);
+		Long producerId = serviceManager.addProducer(producer);
+		
+		Producer producerToUpdate = serviceManager.findProducerById(producerId);
+		producerToUpdate.setActive(ACTIVE_2);
+		serviceManager.updateProducer(producerToUpdate);
+		
+		Producer retrievedProducer = serviceManager.findProducerById(producerId);
+		
+		assertEquals(COMPANY_NAME_1, retrievedProducer.getCompanyName());
+		assertEquals(ACTIVE_2, retrievedProducer.getActive());		
 	}
 	
 	@Test

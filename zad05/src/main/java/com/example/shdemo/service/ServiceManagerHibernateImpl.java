@@ -50,6 +50,11 @@ public class ServiceManagerHibernateImpl implements ServiceManager {
 		}
 		sessionFactory.getCurrentSession().delete(producer);
 	}
+	
+	@Override
+	public void updateProducer(Producer producer) {
+		sessionFactory.getCurrentSession().save(producer);
+	}
 
 	@Override
 	public Producer findProducerById(Long id) {
@@ -94,6 +99,11 @@ public class ServiceManagerHibernateImpl implements ServiceManager {
 		
 		sessionFactory.getCurrentSession().delete(distributor);
 	}
+	
+	@Override
+	public void updateDistributor(Distributor distributor) {
+		sessionFactory.getCurrentSession().save(distributor);
+	}
 
 	@Override
 	public Distributor findDistributorById(Long id) {
@@ -117,6 +127,11 @@ public class ServiceManagerHibernateImpl implements ServiceManager {
 	public void deleteGun(Gun gun) {
 		gun = (Gun) sessionFactory.getCurrentSession().get(Gun.class, gun.getId());
 		sessionFactory.getCurrentSession().delete(gun);
+	}
+	
+	@Override
+	public void updateGun(Gun gun) {
+		sessionFactory.getCurrentSession().save(gun);
 	}
 
 	@Override
@@ -166,6 +181,11 @@ public class ServiceManagerHibernateImpl implements ServiceManager {
 		}
 		
 		sessionFactory.getCurrentSession().delete(label);
+	}
+	
+	@Override
+	public void updateLabel(Label label) {
+		sessionFactory.getCurrentSession().save(label);	
 	}
 
 	@Override
@@ -228,6 +248,11 @@ public class ServiceManagerHibernateImpl implements ServiceManager {
 	}
 
 	@Override
+	public void updateUser(User user) {
+		sessionFactory.getCurrentSession().save(user);
+	}
+	
+	@Override
 	public User findUserById(Long id) {
 		return (User) sessionFactory.getCurrentSession().get(User.class, id);
 	}
@@ -255,5 +280,5 @@ public class ServiceManagerHibernateImpl implements ServiceManager {
 		// TODO Auto-generated method stub
 		
 	}
-	
+
 }

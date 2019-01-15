@@ -14,6 +14,7 @@ public interface ServiceManager {
 	Long addProducer(Producer producer);
 	List<Producer> getAllProducers();
 	void deleteProducer(Producer producer);
+	void updateProducer(Producer producer);
 	Producer findProducerById(Long id);
 	
 	/*Distributor methods*/
@@ -21,12 +22,14 @@ public interface ServiceManager {
 	Long addDistributorToGun(Gun gun, Distributor distributor);
 	List<Distributor> getAllDistributors();
 	void deleteDistributor(Distributor distributor);
+	void updateDistributor(Distributor distributor);
 	Distributor findDistributorById(Long id);
 	
 	/*Gun methods*/
 	Long addGun(Gun gun);
 	List<Gun> getAllGuns();
 	void deleteGun(Gun gun);
+	void updateGun(Gun gun);
 	Gun findGunById(Long id);
 	List<Gun> findGunsByProducer(Long id);
 	
@@ -35,6 +38,7 @@ public interface ServiceManager {
 	Long addLabelToGun(Gun gun, Label label);
 	List<Label> getAllLabels();
 	void deleteLabel(Label label);
+	void updateLabel(Label label);
 	Label findLabelById(Long id);
 	
 	/*User methods*/
@@ -42,6 +46,7 @@ public interface ServiceManager {
 	Long addUserToGun(Gun gun, User user);
 	List<User> getAllUsers();
 	void deleteUser(User user);
+	void updateUser(User user);
 	User findUserById(Long id);
 	
 	/*Business methods*/

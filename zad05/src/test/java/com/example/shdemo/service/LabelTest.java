@@ -62,6 +62,29 @@ public class LabelTest {
 	}
 	
 	@Test
+	public void updateLabelCheck() {
+		List<Label> retrievedLabels = serviceManager.getAllLabels();
+
+		for (Label label : retrievedLabels) {
+			if (label.getReserved().equals(RESERVED_1) && label.getPrice().equals(PRICE_1)) {
+				serviceManager.deleteLabel(label);
+			}
+		}
+		
+		Label label = new Label(RESERVED_1, PRICE_1);
+		Long labelId = serviceManager.addLabel(label);
+		
+		Label labelToUpdate = serviceManager.findLabelById(labelId);
+		labelToUpdate.setPrice(PRICE_2);
+		serviceManager.updateLabel(labelToUpdate);
+		
+		Label retrievedLabel = serviceManager.findLabelById(labelId);
+		
+		assertEquals(RESERVED_1, retrievedLabel.getReserved());
+		assertEquals(PRICE_2, retrievedLabel.getPrice());		
+	}
+	
+	@Test
 	public void deleteLabelCheck() {
 		List<Label> retrievedLabels = serviceManager.getAllLabels();
 

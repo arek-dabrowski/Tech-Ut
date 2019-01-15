@@ -69,6 +69,33 @@ public class UserTest {
 	}
 	
 	@Test
+	public void updateUserCheck() {
+		List<User> retrievedUsers = serviceManager.getAllUsers();
+
+		for (User user : retrievedUsers) {
+			if (user.getFirstName().equals(FIRST_NAME_1) && user.getLastName().equals(LAST_NAME_1) && user.getBirthDate().equals(YOB_1)) {
+				serviceManager.deleteUser(user);
+			}
+		}
+		
+		User user = new User(FIRST_NAME_1, LAST_NAME_1, YOB_1);
+		Long userId = serviceManager.addUser(user);
+		User userToUpdate = serviceManager.findUserById(userId);
+		userToUpdate.setFirstName(FIRST_NAME_2);
+		userToUpdate.setBirthDate(YOB_2);
+		
+		serviceManager.updateUser(userToUpdate);
+
+		User retrievedUser = serviceManager.findUserById(userId);
+		
+		assertEquals(FIRST_NAME_2, retrievedUser.getFirstName());
+		assertEquals(LAST_NAME_1, retrievedUser.getLastName());		
+		assertEquals(YOB_2, retrievedUser.getBirthDate());
+		assertEquals(true, retrievedUser.getOfAge());
+		assertEquals(new Integer(0), retrievedUser.getNumberOfRegisteredGuns());
+	}
+	
+	@Test
 	public void deletUserCheck() {
 		List<User> retrievedUsers = serviceManager.getAllUsers();
 
