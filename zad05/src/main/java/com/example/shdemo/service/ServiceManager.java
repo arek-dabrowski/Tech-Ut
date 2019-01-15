@@ -47,4 +47,5 @@ public interface ServiceManager {
 	List<Gun> getOwnedGuns(User user);
 	void sellGun(Long userId, Long gunId);
 	void reserveGun(Long labelId, Long gunId);
+	void registerGun(Long userId, Long gunId);
 }

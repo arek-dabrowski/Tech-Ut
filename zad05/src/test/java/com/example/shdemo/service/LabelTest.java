@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.shdemo.domain.Gun;
 import com.example.shdemo.domain.Label;
+import com.example.shdemo.domain.Producer;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:/beans.xml" })
@@ -92,10 +93,17 @@ public class LabelTest {
 	@Test
 	public void deleteLabelAssignedToGunCheck() {
 		List<Label> retrievedLabels = serviceManager.getAllLabels();
+		List<Gun> retrievedGuns = serviceManager.getAllGuns();
 
 		for (Label label : retrievedLabels) {
 			if (label.getReserved().equals(RESERVED_1) && label.getPrice().equals(PRICE_1)) {
 				serviceManager.deleteLabel(label);
+			}
+		}
+		
+		for (Gun gun : retrievedGuns) {
+			if (gun.getName().equals(GUN_NAME_1) || gun.getName().equals(GUN_NAME_2)) {
+				serviceManager.deleteGun(gun);
 			}
 		}
 		

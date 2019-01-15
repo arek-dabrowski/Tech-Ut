@@ -1,5 +1,6 @@
 package com.example.shdemo.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
@@ -164,28 +165,32 @@ public class ServiceManagerHibernateImpl implements ServiceManager {
 		return (Label) sessionFactory.getCurrentSession().get(Label.class, id);
 	}
 
+
 	@Override
+	@SuppressWarnings("deprecation")
 	public Long addUser(User user) {
-		// TODO Auto-generated method stub
-		return null;
+		user.setId(null);
+		Date currentDate = new Date();
+		currentDate.setYear(currentDate.getYear() + 1900 - 18);
+		if(currentDate.compareTo(user.getBirthDate()) == -1) user.setOfAge(false);
+		return (Long) sessionFactory.getCurrentSession().save(user);
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public List<User> getAllUsers() {
-		// TODO Auto-generated method stub
-		return null;
+		return sessionFactory.getCurrentSession().getNamedQuery("user.all").list();
 	}
 
 	@Override
 	public void deleteUser(User user) {
-		// TODO Auto-generated method stub
-		
+		user = (User) sessionFactory.getCurrentSession().get(User.class, user.getId());
+		sessionFactory.getCurrentSession().delete(user);
 	}
 
 	@Override
 	public User findUserById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return (User) sessionFactory.getCurrentSession().get(User.class, id);
 	}
 
 	@Override
@@ -211,6 +216,12 @@ public class ServiceManagerHibernateImpl implements ServiceManager {
 		gun = (Gun) sessionFactory.getCurrentSession().get(Gun.class, gun.getId());
 		gun.getDistributors().add(distributor);
 		return (Long) sessionFactory.getCurrentSession().save(distributor);
+	}
+
+	@Override
+	public void registerGun(Long userId, Long gunId) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

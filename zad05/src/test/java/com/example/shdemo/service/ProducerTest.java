@@ -53,7 +53,6 @@ public class ProducerTest {
 		assertEquals(ACTIVE_1, retrievedProducer.getActive());		
 	}
 	
-	
 	@Test
 	public void deleteProducerCheck() {
 		List<Producer> retrievedProducers = serviceManager.getAllProducers();
@@ -61,6 +60,42 @@ public class ProducerTest {
 		for (Producer producer : retrievedProducers) {
 			if (producer.getCompanyName().equals(COMPANY_NAME_1) || producer.getCompanyName().equals(COMPANY_NAME_2)) {
 				serviceManager.deleteProducer(producer);
+			}
+		}
+		
+		Producer producer1 = new Producer(COMPANY_NAME_1, ACTIVE_1);
+		Producer producer2 = new Producer(COMPANY_NAME_2, ACTIVE_2);
+		
+		Long producer1Id = serviceManager.addProducer(producer1);
+		serviceManager.addProducer(producer2);
+		
+		Producer producerToDelete = serviceManager.findProducerById(producer1Id);
+		
+		int beforeDeleteSize = serviceManager.getAllProducers().size();
+		serviceManager.deleteProducer(producerToDelete);
+		int afterDeleteSize = serviceManager.getAllProducers().size();
+		
+		Producer lastProducer = serviceManager.getAllProducers().get(afterDeleteSize-1);
+		
+		assertEquals(beforeDeleteSize, afterDeleteSize + 1);
+		assertEquals(COMPANY_NAME_2, lastProducer.getCompanyName());
+		assertEquals(ACTIVE_2, lastProducer.getActive());		
+	}
+	
+	@Test
+	public void deleteProducerAssignedToGunCheck() {
+		List<Producer> retrievedProducers = serviceManager.getAllProducers();
+		List<Gun> retrievedGuns = serviceManager.getAllGuns();
+
+		for (Producer producer : retrievedProducers) {
+			if (producer.getCompanyName().equals(COMPANY_NAME_1) || producer.getCompanyName().equals(COMPANY_NAME_2)) {
+				serviceManager.deleteProducer(producer);
+			}
+		}
+		
+		for (Gun gun : retrievedGuns) {
+			if (gun.getName().equals(GUN_NAME_1)) {
+				serviceManager.deleteGun(gun);
 			}
 		}
 		
