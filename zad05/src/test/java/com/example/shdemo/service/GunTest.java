@@ -30,6 +30,7 @@ public class GunTest {
 	private final Boolean SOLD_1 = false;
 	private final Double WEIGHT_1 = 2.19;
 	
+	private final String GUN_NAME_2 = "M4A1";
 	@SuppressWarnings("deprecation")
 	private final Date GUN_DATE_2 = new Date(1999, 2, 15);
 	private final Boolean SOLD_2 = true;
@@ -78,5 +79,34 @@ public class GunTest {
 		assertEquals(GUN_DATE_2, retrievedGun.getProductionDate());
 		assertEquals(SOLD_2, retrievedGun.getSold());
 		assertEquals(WEIGHT_2, retrievedGun.getWeight());
-	}		
+	}	
+	
+	@Test
+	public void deleteGunCheck() {
+		List<Gun> retrievedGuns = serviceManager.getAllGuns();
+		for (Gun gun : retrievedGuns) {
+			if (gun.getName().equals(GUN_NAME_1)) {
+				serviceManager.deleteGun(gun);
+			}
+		}
+		
+		Gun gun1 = new Gun(GUN_NAME_1, GUN_DATE_1, SOLD_1, WEIGHT_1);
+		serviceManager.addGun(gun1);
+		Gun gun2 = new Gun(GUN_NAME_2, GUN_DATE_2, SOLD_2, WEIGHT_2);
+		Long gun2Id = serviceManager.addGun(gun2);
+		
+		Gun gunToDelete = serviceManager.findGunById(gun2Id);
+		
+		int beforeDeleteSize = serviceManager.getAllGuns().size();
+		serviceManager.deleteGun(gunToDelete);
+		int afterDeleteSize = serviceManager.getAllGuns().size();
+		
+		Gun lastGun = serviceManager.getAllGuns().get(afterDeleteSize-1);
+		
+		assertEquals(beforeDeleteSize, afterDeleteSize + 1);
+		assertEquals(GUN_NAME_1, lastGun.getName());
+		assertEquals(GUN_DATE_1, lastGun.getProductionDate());
+		assertEquals(SOLD_1, lastGun.getSold());
+		assertEquals(WEIGHT_1, lastGun.getWeight());
+	}
 }
