@@ -1,1 +1,1 @@
-# Arkadiusz Dąbrowski
+# Technologie utrwalania dla języka Java
